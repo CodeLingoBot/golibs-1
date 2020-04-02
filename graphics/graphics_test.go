@@ -59,6 +59,9 @@ func Test_EachPixel(t *testing.T) {
 
 func Test_ResizeNearestNeighbor(t *testing.T) {
 	file, err := os.Open("./img.png")
+	if err != nil {
+		t.Fatalf("ResizeNearestNeighbor Test failed: %v", err)
+	}
 	file1, err1 := os.Open("./img.err")
 	defer func() {
 		file.Close()
@@ -91,6 +94,10 @@ func Test_ImageDecodeFail(t *testing.T) {
 	defer func() {
 		file.Close()
 	}()
+
+	if err != nil {
+		t.Fatalf("ImageDecodeFail Test failed: %v", err)
+	}
 
 	_, err = ResizeNearestNeighbor(file, 200, 150)
 
