@@ -27,7 +27,7 @@ func Init() *Communication {
 				}
 			case msg := <-hub.messages:
 				for rec := range hub.receiver {
-					go func(message interface{}, receiver chan interface{}) {
+					go func(message interface{}, receiver chan<- interface{}) {
 						receiver <- message
 					}(msg, rec)
 				}
@@ -44,7 +44,7 @@ func (hub *Communication) AddReceiver() chan interface{} {
 	return messageChannel
 }
 
-func (hub *Communication) CloseReceiver(ch chan interface{}) int {
+func (hub *Communication) CloseReceiver(ch <-chan interface{}) int {
 	hub.rmReceiver <- ch
 	return hub.CountReceiver()
 }
